@@ -1,0 +1,15 @@
+dependencies:
+- name: kube-prometheus-stack
+  repository: https://prometheus-community.github.io/helm-charts
+  version: 42.1.0
+- name: elasticsearch
+  repository: https://helm.elastic.co
+  version: 8.5.1
+- name: kibana
+  repository: https://helm.elastic.co
+  version: 7.9.3
+- name: fluentd-elasticsearch
+  repository: https://kokuwaio.github.io/helm-charts
+  version: 11.0.1
+digest: sha256:c1ca77326dbbef85ab7a64c800189e0e320059ea8614564fbf686ba25a3fa1c9
+generated: "2022-11-29T00:11:08.947018-05:00"
