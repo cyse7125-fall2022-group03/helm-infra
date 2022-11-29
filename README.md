@@ -8,6 +8,7 @@
 | Vignesh Gunasekaran | 001029530 | gunasekaran.v@northeastern.edu |
 
 install dependencies EFK, Prometheus, etc
+
 ## Validate helm chart
 cd app
 
@@ -40,3 +41,4 @@ helm install infra .
 install dependencies EFK, Prometheus, etc
 
 
+=======
