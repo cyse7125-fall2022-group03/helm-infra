@@ -1,7 +1,3 @@
-# Default values for app-prereq.
-# This is a YAML-formatted file.
-# Declare variables to be passed into your templates.
-
 replicaCount: 1
 
 service:
@@ -24,6 +20,7 @@ autoscaling:
   maxReplicas: 100
   targetCPUUtilizationPercentage: 80
 
+# Kafka Values
 
 kafka:
   ## Kafka Brokers The StatefulSet installs 3 pods by default
@@ -128,12 +125,7 @@ kafka:
     # team: developers
 
   podDisruptionBudget: {}
-    # maxUnavailable: 1  # Limits how many Kafka pods may be unavailable due to voluntary disruptions.
 
-  ## Configuration Overrides. Specify any Kafka settings you would like set on the StatefulSet
-  ## here in map format, as defined in the official docs.
-  ## ref: https://kafka.apache.org/documentation/#brokerconfigs
-  ##
   configurationOverrides:
     "confluent.support.metrics.enable": true  # Disables confluent metric submission
     # "auto.leader.rebalance.enable": true
@@ -151,18 +143,12 @@ kafka:
   persistence:
     enabled: true
 
-    ## The size of the PersistentVolume to allocate to each Kafka Pod in the StatefulSet. For
-    ## production servers this number should likely be much larger.
-    ##
     size: "1Gi"
 
     mountPath: "/opt/kafka/data"
 
   jmx:
-    ## Rules to apply to the Prometheus JMX Exporter.  Note while lots of stats have been cleaned and exposed,
-    ## there are still more stats to clean up and expose, others will never get exposed.  They keep lots of duplicates
-    ## that can be derived easily.  The configMap in this chart cleans up the metrics it exposes to be in a Prometheus
-    ## format, eg topic, broker are labels and not part of metric name. Improvements are gladly accepted and encouraged.
+    
     configMap:
 
       ## Allows disabling the default configmap, note a configMap is needed
@@ -273,14 +259,9 @@ kafka:
         # Use release namespace instead
         releaseNamespace: false
 
-        ## Defaults to whats used if you follow CoreOS [Prometheus Install Instructions](https://github.com/coreos/prometheus-operator/tree/master/helm#tldr)
-        ## [Prometheus Selector Label](https://github.com/coreos/prometheus-operator/blob/master/helm/prometheus/templates/prometheus.yaml#L65)
-        ## [Kube Prometheus Selector Label](https://github.com/coreos/prometheus-operator/blob/master/helm/kube-prometheus/values.yaml#L298)
         selector:
           prometheus: kube-prometheus
 
-        ## Some example rules.
-        ## e.g. max(kafka_controller_kafkacontroller_activecontrollercount_value{service="my-kafka-release"}) by (service) < 1
         rules:
         - alert: KafkaNoActiveControllers
           annotations:
@@ -297,64 +278,20 @@ kafka:
           labels:
             severity: critical
 
-  ## Kafka Config job configuration
-  ##
+
   configJob:
-    ## Specify the number of retries before considering kafka-config job as failed.
-    ## https://kubernetes.io/docs/concepts/workloads/controllers/jobs-run-to-completion/#pod-backoff-failure-policy
     backoffLimit: 6
 
-  ## Topic creation and configuration.
-  ## The job will be run on a deployment only when the config has been changed.
-  ## - If 'partitions' and 'replicationFactor' are specified we create the topic (with --if-not-exists.)
-  ## - If 'partitions', 'replicationFactor' and 'reassignPartitions' are specified we reassign the partitions to
-  ## increase the replication factor of an existing topic.
-  ## - If 'partitions' is specified we 'alter' the number of partitions. This will
-  ## silently and safely fail if the new setting isn’t strictly larger than the old (i.e. a NOOP.) Do be aware of the
-  ## implications for keyed topics (ref: https://docs.confluent.io/current/kafka/post-deployment.html#admin-operations)
-  ## - If 'defaultConfig' is specified it's deleted from the topic configuration. If it isn't present,
-  ## it will silently and safely fail.
-  ## - If 'config' is specified it's added to the topic configuration.
-  ##
-  ## Note: To increase the 'replicationFactor' of a topic, 'reassignPartitions' must be set to true (see above).
-  ##
-  # topics: 
-  #   - name: watch
-  #     partitions: 3
-  #     replicationFactor: 2
-  #     reassignPartitions: true
-  #   - name: weather
-  #     partitions: 3
-  #     replicationFactor: 2
-  #     reassignPartitions: true
-    # - name: myExistingTopicPartitions
-    #   partitions: 8
-    # - name: myNewTopicWithConfig
-    #   partitions: 8
-    #   replicationFactor: 3
-    #   defaultConfig: "segment.bytes,segment.ms"
-    #   config: "cleanup.policy=compact,delete.retention.ms=604800000"
-    # - name: myAclTopicPartitions
-    #   partitions: 8
-    #   acls:
-    #     - user: read
-    #       operations: [ Read ]
-    #     - user: read_and_write
-    #       operations:
-    #         - Read
-    #         - Write
-    #     - user: all
-    #       operations: [ All ]
+  topics: 
+    - name: topic01-team3
+      partitions: 3
+      replicationFactor: 2
+      reassignPartitions: true
 
-  ## Enable/disable the chart's tests.  Useful if using this chart as a dependency of
-  ## another chart and you don't want these tests running when trying to develop and
-  ## test your own chart.
   testsEnabled: true
 
 
-# ------------------------------------------------------------------------------
-# Zookeeper:
-# ------------------------------------------------------------------------------
+# Zookeepeer values
 
 zookeeper:
   replicaCount: 1
@@ -389,19 +326,11 @@ zookeeper:
   ## ref: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#affinity-and-anti-affinity
   ## By default we don't set affinity:
   affinity: {}  # Criteria by which pod label-values influence scheduling for zookeeper pods.
-  # podAntiAffinity:
-  #   requiredDuringSchedulingIgnoredDuringExecution:
-  #     - topologyKey: "kubernetes.io/hostname"
-  #       labelSelector:
-  #         matchLabels:
-  #           release: zookeeper
 
-# ------------------------------------------------------------------------------
-# ElasticSearch:
-# ------------------------------------------------------------------------------
+# Elastic Search values
 
 elasticsearch:
-  # Prod: replicas: 3, minimumMasterNodes:2
+
   replicas: 2
   minimumMasterNodes: 1
   clusterHealthCheckParams: "wait_for_status=green&timeout=60s"
@@ -430,12 +359,9 @@ elasticsearch:
     successThreshold: 1
     failureThreshold: 3
 
-# ------------------------------------------------------------------------------
-# Kibana:
-# ------------------------------------------------------------------------------
+# Kibana values
 
 kibana:
-#  elasticsearchHosts: "http://elasticsearch-master:9200"
 
   replicas: 1
 
@@ -458,23 +384,15 @@ kibana:
     failureThreshold: 3
 
     
-
-# ------------------------------------------------------------------------------
-# fluentd:
-# ------------------------------------------------------------------------------
+# Values: Fluentd 
 
 fluentd-elasticsearch:
   elasticsearch:
     hosts: ["elasticsearch-master:9200"]
     host: 'elasticsearch-master'
     port: 9200
-    # logstash_format: true
-    # logstash_prefix: 'logstash'
-    # index_name: fluentd.${tag}.%Y%m%d  
-  
-# ------------------------------------------------------------------------------
-# prometheus:
-# ------------------------------------------------------------------------------
+
+# Values: Prometheus
 
 prometheus:
   server:
@@ -497,29 +415,24 @@ prometheus:
 
       scrape_configs:
         - job_name: webapp
-
           scrape_interval: 10s
           scrape_timeout: 10s
           honor_labels: true
           metrics_path: /actuator/prometheus
-
           static_configs:
             - targets: ['app-csye7125:8080'] 
 
-        - job_name: eexporter
-          
+        - job_name: eexporter          
           scrape_interval: 10s
           scrape_timeout: 10s  
           honor_labels: true
-
           static_configs:
             - targets: ['infra-prometheus-elasticsearch-exporter:9108']
+
         - job_name: kafka-exporter
-          
           scrape_interval: 10s
           scrape_timeout: 10s  
           honor_labels: true
-
           static_configs:
             - targets: ['infra-prometheus-kafka-exporter:9308']
             
@@ -530,7 +443,7 @@ prometheus:
           honor_labels: true
 
           static_configs:
-            - targets: ['app-prereq-kafka:5555']             
+            - targets: ['app-csye7125-kafka:5555']             
                         
 
 grafana:
