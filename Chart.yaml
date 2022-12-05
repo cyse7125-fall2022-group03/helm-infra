@@ -13,30 +13,14 @@ description: A Helm chart for Kubernetes
 type: application
 
 dependencies:
-# - name: elasticsearch
-#   version: 8.5.1
-#   repository: https://helm.elastic.co
-# - name: kibana
-#   version: 8.5.1
-#   repository: https://helm.elastic.co
-# - name: fluentd-elasticsearch
-#   version: 11.0.1
-#   repository: https://kokuwaio.github.io/helm-charts
-# - name: metrics-server
-#   version: 6.0.0
-#   repository: https://charts.bitnami.com/bitnami
-# - name: prometheus
-#   version: 11.16.7
-#   repository: https://prometheus-community.github.io/helm-charts
-# - name: alertmanager
-#   version: 0.1.4
-#   repository: https://prometheus-community.github.io/helm-charts
-dependencies:
-- name: kube-prometheus-stack
-  version: "42.1.0"
+- name: prometheus
+  version: 18.0
+  repository: https://prometheus-community.github.io/helm-charts
+- name: prometheus-elasticsearch-exporter
+  version: 5.0.0
   repository: https://prometheus-community.github.io/helm-charts
 - name: elasticsearch
-  version: 8.5.1
+  version: 7.9.3
   repository: https://helm.elastic.co
 - name: kibana
   version: 7.9.3
@@ -44,16 +28,15 @@ dependencies:
 - name: fluentd-elasticsearch
   version: 11.0.1
   repository: https://kokuwaio.github.io/helm-charts
-# - name: prometheus-elasticsearch-exporter
-#   version: 4.7.0
-#   repository: https://prometheus-community.github.io/helm-charts
-# - name: alertmanager
-#   version: 0.22
-#   repository: https://prometheus-community.github.io/helm-charts
-# - name: grafana
-#   version: 6.0.0
-#   repository: https://grafana.github.io/helm-charts
-
+- name: prometheus-elasticsearch-exporter
+  version: 4.7.0
+  repository: https://prometheus-community.github.io/helm-charts
+- name: grafana
+  version: 6.0.0
+  repository: https://grafana.github.io/helm-charts
+- name: kafka
+  version: 0.21.2
+  repository: https://charts.helm.sh/incubator  
 
 # This is the chart version. This version number should be incremented each time you make changes
 # to the chart and its templates, including the app version.
@@ -65,3 +48,12 @@ version: 0.1.0
 # follow Semantic Versioning. They should reflect the version the application is using.
 # It is recommended to use it with quotes.
 appVersion: "1.16.0"
+sources:
+  - https://github.com/cyse7125-fall2022-group03/helm-infra.git
+maintainers:
+  - name: Ketki Kule
+    email: kule.k@northeastern.edu
+  - name: Sandeep Bharat Wagh
+    email: wagh.sn@northeastern.edu
+  - name: Vignesh Gunasekaran
+    email: gunasekaran.v@northeastern.edu
