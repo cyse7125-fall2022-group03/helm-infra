@@ -20,7 +20,7 @@ autoscaling:
   maxReplicas: 100
   targetCPUUtilizationPercentage: 80
 
-# Kafka Values
+# Values: Kafka
 
 kafka:
   ## Kafka Brokers The StatefulSet installs 3 pods by default
@@ -205,7 +205,7 @@ kafka:
         #   cpu: 100m
         #   memory: 100Mi
 
-    ## Prometheus Kafka Exporter: exposes complimentary metrics to JMX Exporter
+    
     kafka:
       enabled: true
 
@@ -291,7 +291,7 @@ kafka:
   testsEnabled: true
 
 
-# Zookeepeer values
+# Values: Zookeepeer
 
 zookeeper:
   replicaCount: 1
@@ -327,7 +327,7 @@ zookeeper:
   ## By default we don't set affinity:
   affinity: {}  # Criteria by which pod label-values influence scheduling for zookeeper pods.
 
-# Elastic Search values
+# Values: Elastic Search
 
 elasticsearch:
 
@@ -359,7 +359,7 @@ elasticsearch:
     successThreshold: 1
     failureThreshold: 3
 
-# Kibana values
+# Values: Kibana
 
 kibana:
 
@@ -434,17 +434,16 @@ prometheus:
           scrape_timeout: 10s  
           honor_labels: true
           static_configs:
-            - targets: ['infra-prometheus-kafka-exporter:9308']
+            - targets: ['infra-kafka-exporter:9308']
             
-        - job_name: jmx-exporter
-          
+        - job_name: jmx-exporter          
           scrape_interval: 10s
           scrape_timeout: 10s  
           honor_labels: true
-
           static_configs:
-            - targets: ['app-csye7125-kafka:5555']             
+            - targets: ['infra-kafka:5555']             
                         
+#Values: grafana
 
 grafana:
   service:
