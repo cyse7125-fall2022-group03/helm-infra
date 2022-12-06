@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kafka-exporter
+spec:
+  selector:
+    matchLabels:
+      app: kafka-exporter
+  template:
+    metadata:
+      labels:
+        app: kafka-exporter
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/port: "9308"
+    spec:
+      containers:
+        - name: kafka-exporter
+          image: "danielqsj/kafka-exporter:latest"
+          imagePullPolicy: Always
+          ports:
+            - name: "kexporter"
+              containerPort: 9308
+              protocol: TCP
+          args:
+            - --kafka.server=infra-kafka:9092
+            - --zookeeper.server=infra-zookeeper:2181
