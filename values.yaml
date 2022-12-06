@@ -240,7 +240,7 @@ kafka:
       serviceMonitor:
         # Namespace in which to install the ServiceMonitor resource.
         namespace: monitoring
-        # namespace: default
+        #namespace: default
         # Use release namespace instead
         releaseNamespace: false
 
@@ -256,6 +256,7 @@ kafka:
 
         ## Namespace in which to install the PrometheusRule resource.
         namespace: monitoring
+        #namespace: default
         # Use release namespace instead
         releaseNamespace: false
 
@@ -334,7 +335,7 @@ elasticsearch:
   replicas: 2
   minimumMasterNodes: 1
   clusterHealthCheckParams: "wait_for_status=green&timeout=60s"
-
+  clusterName: esinfra
   esJavaOpts: "-Xmx1g -Xms1g"
 
   resources:
@@ -365,6 +366,8 @@ kibana:
 
   replicas: 1
 
+  elasticsearchHosts: "http://esinfra-master:9200"
+
   resources:
     requests:
       cpu: "550m"
@@ -388,8 +391,8 @@ kibana:
 
 fluentd-elasticsearch:
   elasticsearch:
-    hosts: ["elasticsearch-master:9200"]
-    host: 'elasticsearch-master'
+    hosts: ["esinfra-master:9200"]
+    host: 'esinfra-master'
     port: 9200
 
 # Values: Prometheus
