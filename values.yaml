@@ -438,13 +438,14 @@ prometheus:
           honor_labels: true
           static_configs:
             - targets: ['kafka-exporter:9308']
-            
-        - job_name: jmx-exporter          
+
+        - job_name: elasticSearch2
           scrape_interval: 10s
           scrape_timeout: 10s  
           honor_labels: true
           static_configs:
-            - targets: ['infra-kafka:5555']             
+            - targets: ['elasticsearch-prometheus-elasticsearch-exporter:9108']         
+                    
                         
 #Values: grafana
 
