@@ -1,5 +1,16 @@
 # helm-infra
 
+## Chart Info
+Contains dependency charts for the following:
+1. Prometheus
+2. Elastic Search
+3. Metrics Server
+4. Grafana
+5. Kibana
+6. Kafka (& Zookeeper)
+7. Fluentd
+
+
 
 | Name                | NUID      | Email                          |
 | ------------------- | --------- | ------------------------------ |
@@ -20,12 +31,12 @@ helm lint .
 helm template .
 ```
 
-Install helm chart 
+## Installation 
 
 move outside the helm chart directory 
  cd ../
 
- ```
+```
 helm dependency build
 ```
 
@@ -33,12 +44,9 @@ helm dependency build
 helm install infra .
 ```
 
+## To check Prometheus locally 
 
-## File Structure
+```
+kubectl port-forward service/infra-prometheus-server 9092:80
+```
 
-### dependcy
-
-install dependencies EFK, Prometheus, etc
-
-
-=======
