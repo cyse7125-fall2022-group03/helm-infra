@@ -1,0 +1,20 @@
+apiVersion: cert-manager.io/v1
+kind: ClusterIssuer
+metadata:
+  name: letsencrypt
+  namespace: istio-system
+spec:
+  acme:
+    email: kule.k@northeastern.edu #change email
+    privateKeySecretRef:
+      name: letsencrypt-stage1
+    server: https://acme-staging-v02.api.letsencrypt.org/directory
+    solvers:
+      - dns01:
+          route53:
+            region: us-east-1
+            hostedZoneID: Z04249041KX5VTJMAH9VZ #Z04249041KX5VTJMAH9VZ aws route 53
+            accessKeyID: AKIAQ3K7GN4ZQOMUJPUT #access key ID ghactions
+            secretAccessKeySecretRef:
+              name: example-com-r53-creds
+              key: secret-access-key
