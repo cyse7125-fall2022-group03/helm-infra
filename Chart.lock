@@ -1,0 +1,27 @@
+dependencies:
+- name: prometheus
+  repository: https://prometheus-community.github.io/helm-charts
+  version: 18.4.0
+- name: prometheus-elasticsearch-exporter
+  repository: https://prometheus-community.github.io/helm-charts
+  version: 5.0.0
+- name: elasticsearch
+  repository: https://helm.elastic.co
+  version: 7.9.3
+- name: kibana
+  repository: https://helm.elastic.co
+  version: 7.9.3
+- name: fluentd-elasticsearch
+  repository: https://kokuwaio.github.io/helm-charts
+  version: 11.0.1
+- name: prometheus-elasticsearch-exporter
+  repository: https://prometheus-community.github.io/helm-charts
+  version: 4.7.0
+- name: grafana
+  repository: https://grafana.github.io/helm-charts
+  version: 6.0.0
+- name: kafka
+  repository: https://charts.helm.sh/incubator
+  version: 0.21.2
+digest: sha256:84987cbce3610303962a90229482733a892b60c9288d2437e3fc1568496b1ab9
+generated: "2022-12-06T16:37:52.265577902-05:00"
