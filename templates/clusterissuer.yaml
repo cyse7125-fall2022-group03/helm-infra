@@ -5,7 +5,7 @@ metadata:
   namespace: istio-system
 spec:
   acme:
-    email: wagh.sn@northeastern.edu #change email
+    email: {{ .Values.certificate.email }} #change email
     privateKeySecretRef:
       name: letsencrypt-stage1
     server: https://acme-staging-v02.api.letsencrypt.org/directory   #https://acme-v02.api.letsencrypt.org/directory    #
@@ -13,8 +13,8 @@ spec:
       - dns01:
           route53:
             region: us-east-1
-            hostedZoneID: Z048238311EYBLK3TRLC1 #Z04249041KX5VTJMAH9VZ aws route 53
-            accessKeyID: AKIAZXLX5PQWKUFOL2X5 #access key ID ghactions
+            hostedZoneID: {{ .Values.certificate.hostedZoneID }} #Z04249041KX5VTJMAH9VZ aws route 53
+            accessKeyID: {{ .Values.certificate.accessKeyID }} #access key ID ghactions
             secretAccessKeySecretRef:
               name: example-com-r53-creds
               key: secret-access-key
