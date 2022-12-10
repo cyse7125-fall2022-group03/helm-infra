@@ -4,9 +4,9 @@ metadata:
   name: webapp
   namespace: istio-system
 spec:
-  commonName: sandeepwagh.me
+  commonName: {{ .Values.certificate.domainName }}
   dnsNames:
-  - sandeepwagh.me
+  - {{ .Values.certificate.domainName }}
   issuerRef:
     kind: ClusterIssuer
     name: letsencrypt

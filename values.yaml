@@ -1,5 +1,15 @@
 replicaCount: 1
 
+
+certificate:
+  secretAccessKey: ZjdON1hKTEZiYkJrK1FNeXRkZFlVcDUxb0JxTjVyMFVnbVlBWnordw==
+  domainName: sandeepwagh.me
+  hostName: "sandeepwagh.me"
+  email: wagh.sn@northeastern.edu
+  accessKeyID: AKIAZXLX5PQWKUFOL2X5
+  hostedZoneID: Z048238311EYBLK3TRLC1
+
+
 service:
   type: ClusterIP
   port: 80

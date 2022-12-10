@@ -17,7 +17,7 @@ spec:
       mode: SIMPLE
       credentialName: letsencrypt-stage
     hosts:
-      - "sandeepwagh.me"
+      - {{ .Values.certificate.hostName | quote}}
     # tls:
     #   mode: SIMPLE
     #   credentialName: letsencrypt-stage-kibana
