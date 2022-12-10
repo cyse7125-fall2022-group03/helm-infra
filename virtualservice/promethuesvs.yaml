@@ -1,0 +1,19 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: prom-virtual-service
+  #namespace: istio-system
+spec:
+  hosts:
+  - "prom.sandeepwagh.me"
+  gateways:
+  - istio-telemetry-gateway
+  http:
+  - match:
+    - uri:
+        prefix: /
+    route:
+    - destination:
+        host: infra-prometheus-server.default.svc.cluster.local
+        port:
+          number: 80
