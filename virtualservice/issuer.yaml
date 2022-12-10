@@ -1,0 +1,20 @@
+# apiVersion: cert-manager.io/v1
+# kind: Issuer
+# metadata:
+#   name: letsencrypt-kibana
+#   namespace: istio-system
+# spec:
+#   acme:
+#     email: wagh.sn@northeastern.edu #change email
+#     privateKeySecretRef:
+#       name: letsencrypt-stage2
+#     server: https://acme-staging-v02.api.letsencrypt.org/directory   #https://acme-v02.api.letsencrypt.org/directory    #
+#     solvers:
+#       - dns01:
+#           route53:
+#             region: us-east-1
+#             hostedZoneID: Z0492867A27XPVU7RIJD #Z04249041KX5VTJMAH9VZ aws route 53
+#             accessKeyID: AKIAZXLX5PQWKUFOL2X5 #access key ID ghactions
+#             secretAccessKeySecretRef:
+#               name: example-com-r53-creds
+#               key: secret-access-key

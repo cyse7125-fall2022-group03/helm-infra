@@ -1,0 +1,31 @@
+# Source: istio/charts/telemetry-gateway/templates/gateway.yaml
+
+apiVersion: networking.istio.io/v1alpha3
+kind: Gateway
+metadata:
+  name: istio-telemetry-gateway
+  #namespace: istio-system
+spec:
+  selector:
+    istio: ingressgateway
+  servers:
+  - port:
+      number: 443
+      name: https
+      protocol: HTTPS
+    tls:
+      mode: SIMPLE
+      credentialName: letsencrypt-stage
+    hosts:
+      - "sandeepwagh.me"
+    # tls:
+    #   mode: SIMPLE
+    #   credentialName: letsencrypt-stage-kibana
+    # hosts:
+    #   - "kibana.sandeepwagh.me"
+  - port:
+      number: 80
+      name: http
+      protocol: HTTP
+    hosts:
+    - "*"
